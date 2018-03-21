@@ -36,6 +36,7 @@ IMPROVEMENTS:
 - [all] renamed `dummy` (`persistent_dummy`) to `kvstore`
   (`persistent_kvstore`) (name "dummy" is deprecated and will not work in
   release after this one)
+- [p2p] do not try to connect to ourselves (ok, maybe only once)
 
 FEATURES:
 - [config] added the `--p2p.private_peer_ids` flag and `PrivatePeerIDs` config variable (see config for description)

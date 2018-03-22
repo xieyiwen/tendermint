@@ -29,6 +29,7 @@ BUG FIXES:
 
 BREAKING:
 - [genesis] rename `app_options` to `app_state`
+- [p2p] require all addresses come with an ID no matter what
 
 IMPROVEMENTS:
 - [config] exposed `auth_enc` flag to enable/disable encryption

@@ -89,22 +89,19 @@ func TestPEXReactorRunning(t *testing.T) {
 		})
 	}
 
-	// fill the address book and add listeners
-	addr := switches[1].NodeInfo().NetAddress()
-	books[0].AddAddress(addr, addr)
-	switches[0].AddListener(p2p.NewDefaultListener("tcp", switches[0].NodeInfo().ListenAddr, true, logger.With("pex", 0)))
+	addOtherNodeAddrToAddrBook := func(switchIndex, otherSwitchIndex int) {
+		addr := switches[otherSwitchIndex].NodeInfo().NetAddress()
+		books[switchIndex].AddAddress(addr, addr)
+	}
 
-	addr = switches[0].NodeInfo().NetAddress()
-	books[1].AddAddress(addr, addr)
-	switches[1].AddListener(p2p.NewDefaultListener("tcp", switches[1].NodeInfo().ListenAddr, true, logger.With("pex", 1)))
+	addOtherNodeAddrToAddrBook(0, 1)
+	addOtherNodeAddrToAddrBook(1, 0)
+	addOtherNodeAddrToAddrBook(2, 1)
 
-	addr = switches[1].NodeInfo().NetAddress()
-	books[2].AddAddress(addr, addr)
-	switches[2].AddListener(p2p.NewDefaultListener("tcp", switches[2].NodeInfo().ListenAddr, true, logger.With("pex", 2)))
+	for i, sw := range switches {
+		sw.AddListener(p2p.NewDefaultListener("tcp", sw.NodeInfo().ListenAddr, true, logger.With("pex", i)))
 
-	// start switches
-	for _, s := range switches {
-		err := s.Start() // start switch and reactors
+		err := sw.Start() // start switch and reactors
 		require.Nil(t, err)
 	}
 

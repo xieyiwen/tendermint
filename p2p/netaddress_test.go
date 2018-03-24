@@ -67,7 +67,7 @@ func TestNewNetAddressStringWithOptionalID(t *testing.T) {
 	}
 }
 
-func TestNewNetAddressStringRequiresID(t *testing.T) {
+func TestNewNetAddressString(t *testing.T) {
 	testCases := []struct {
 		addr     string
 		expected string
@@ -91,9 +91,10 @@ func TestNewNetAddressStringRequiresID(t *testing.T) {
 
 func TestNewNetAddressStrings(t *testing.T) {
 	addrs, errs := NewNetAddressStrings([]string{
+		"127.0.0.1:8080",
 		"deadbeefdeadbeefdeadbeefdeadbeefdeadbeef@127.0.0.1:8080",
 		"deadbeefdeadbeefdeadbeefdeadbeefdeadbeed@127.0.0.2:8080"})
-	assert.Len(t, errs, 0)
+	assert.Len(t, errs, 1)
 	assert.Equal(t, 2, len(addrs))
 }
 

@@ -54,8 +54,8 @@ func NewNetAddress(id ID, addr net.Addr) *NetAddress {
 	return na
 }
 
-// NewNetAddressStringWithIDRequired returns a new NetAddress using the provided
-// address in the form of "ID@IP:Port".
+// NewNetAddressString returns a new NetAddress using the provided address in
+// the form of "ID@IP:Port".
 // Also resolves the host if host is not an IP.
 func NewNetAddressString(addr string) (*NetAddress, error) {
 	spl := strings.Split(addr, "@")

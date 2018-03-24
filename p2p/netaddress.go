@@ -65,8 +65,8 @@ func NewNetAddressString(addr string) (*NetAddress, error) {
 	return NewNetAddressStringWithOptionalID(addr)
 }
 
-// NewNetAddressStringWithIDRequired returns a new NetAddress using the provided
-// address in the form of "ID@IP:Port", where the ID is optional.
+// NewNetAddressStringWithOptionalID returns a new NetAddress using the
+// provided address in the form of "ID@IP:Port", where the ID is optional.
 // Also resolves the host if host is not an IP.
 func NewNetAddressStringWithOptionalID(addr string) (*NetAddress, error) {
 	addrWithoutProtocol := removeProtocolIfDefined(addr)

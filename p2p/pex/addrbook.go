@@ -159,8 +159,8 @@ func (a *addrBook) AddOurAddress(addr *p2p.NetAddress) {
 // OurAddress returns true if it is our address.
 func (a *addrBook) OurAddress(addr *p2p.NetAddress) bool {
 	a.mtx.Lock()
-	defer a.mtx.Unlock()
 	_, ok := a.ourAddrs[addr.String()]
+	a.mtx.Unlock()
 	return ok
 }
 

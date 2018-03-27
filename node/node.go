@@ -414,17 +414,18 @@ func (n *Node) OnStart() error {
 	}
 	n.Logger.Info("P2P Node ID", "ID", nodeKey.ID(), "file", n.config.NodeKeyFile())
 
-	// Start the switch
 	nodeInfo := n.makeNodeInfo(nodeKey.PubKey())
 	n.sw.SetNodeInfo(nodeInfo)
 	n.sw.SetNodeKey(nodeKey)
+
+	// Add ourselves to addrbook to prevent dialing ourselves
+	n.addrBook.AddOurAddress(nodeInfo.NetAddress())
+
+	// Start the switch
 	err = n.sw.Start()
 	if err != nil {
 		return err
 	}
-
-	// Add ourselves to addrbook to prevent dialing ourselves
-	n.addrBook.AddOurAddress(nodeInfo.NetAddress())
 
 	// Always connect to persistent peers
 	if n.config.P2P.PersistentPeers != "" {

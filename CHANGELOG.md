@@ -25,10 +25,14 @@ BUG FIXES:
 - Graceful handling/recovery for apps that have non-determinism or fail to halt
 - Graceful handling/recovery for violations of safety, or liveness
 
+## 0.17.2 (TBD)
+
+BUG FIXES:
+- [rpc] fix subscribing using an abci.ResponseDeliverTx tag
+
 ## 0.17.1 (March 27th, 2018)
 
 BUG FIXES:
-
 - [types] Actually support `app_state` in genesis as `AppStateJSON`
 
 ## 0.17.0 (March 27th, 2018)

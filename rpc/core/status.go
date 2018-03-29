@@ -1,6 +1,7 @@
 package core
 
 import (
+	"bytes"
 	"time"
 
 	ctypes "github.com/tendermint/tendermint/rpc/core/types"
@@ -48,7 +49,10 @@ import (
 // 			"remote_addr": "",
 // 			"network": "test-chain-qhVCa2",
 // 			"moniker": "vagrant-ubuntu-trusty-64",
-// 			"pub_key": "844981FE99ABB19F7816F2D5E94E8A74276AB1153760A7799E925C75401856C6"
+// 			"pub_key": "844981FE99ABB19F7816F2D5E94E8A74276AB1153760A7799E925C75401856C6",
+//			"validator_status": {
+//				"voting_power": 10
+//			}
 // 		}
 // 	},
 // 	"id": "",
@@ -72,12 +76,26 @@ func Status() (*ctypes.ResultStatus, error) {
 
 	latestBlockTime := time.Unix(0, latestBlockTimeNano)
 
-	return &ctypes.ResultStatus{
+	result := &ctypes.ResultStatus{
 		NodeInfo:          p2pSwitch.NodeInfo(),
 		PubKey:            pubKey,
 		LatestBlockHash:   latestBlockHash,
 		LatestAppHash:     latestAppHash,
 		LatestBlockHeight: latestHeight,
 		LatestBlockTime:   latestBlockTime,
-		Syncing:           consensusReactor.FastSync()}, nil
+		Syncing:           consensusReactor.FastSync(),
+	}
+
+	// add ValidatorStatus if node is a validator
+	_, vals := consensusState.GetValidators()
+	privValAddress := pubKey.Address()
+	for _, val := range vals {
+		if bytes.Equal(val.Address, privValAddress) {
+			result.ValidatorStatus = ctypes.ValidatorStatus{
+				VotingPower: val.VotingPower,
+			}
+		}
+	}
+
+	return result, nil
 }

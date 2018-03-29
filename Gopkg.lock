@@ -284,7 +284,7 @@
     "pubsub/query",
     "test"
   ]
-  revision = "0f2811441f4cf44b414df16ceae3c0931c74662e"
+  revision = "898216d419ad046ee3c3dee91df851e4e30461d7"
 
 [[projects]]
   branch = "master"

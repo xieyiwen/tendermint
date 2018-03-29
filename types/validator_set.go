@@ -90,6 +90,8 @@ func (valSet *ValidatorSet) HasAddress(address []byte) bool {
 	return idx != len(valSet.Validators) && bytes.Equal(valSet.Validators[idx].Address, address)
 }
 
+// GetByAddress returns an index of the validator with address and validator
+// itself if found. Otherwise, -1 and nil are returned.
 func (valSet *ValidatorSet) GetByAddress(address []byte) (index int, val *Validator) {
 	idx := sort.Search(len(valSet.Validators), func(i int) bool {
 		return bytes.Compare(address, valSet.Validators[i].Address) <= 0
@@ -97,7 +99,7 @@ func (valSet *ValidatorSet) GetByAddress(address []byte) (index int, val *Valida
 	if idx != len(valSet.Validators) && bytes.Equal(valSet.Validators[idx].Address, address) {
 		return idx, valSet.Validators[idx].Copy()
 	} else {
-		return 0, nil
+		return -1, nil
 	}
 }
 

@@ -71,6 +71,9 @@ func (valSet *ValidatorSet) IncrementAccum(times int) {
 }
 
 func (valSet *ValidatorSet) Copy() *ValidatorSet {
+	if valSet == nil || valSet.Size() == 0 {
+		return NewValidatorSet(nil)
+	}
 	validators := make([]*Validator, len(valSet.Validators))
 	for i, val := range valSet.Validators {
 		// NOTE: must copy, since IncrementAccum updates in place.
